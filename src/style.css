@@ -1,0 +1,39 @@
+/* Tailwind v4 */
+@import "tailwindcss";
+
+html, body, #root { height: 100%; }
+canvas { display: block; }
+
+/* Animated gradient (bergerak + berubah warna) */
+.bg-audio-gradient {
+  /* 3 layer: 2 radial glow + 1 linear base */
+  background:
+    radial-gradient(1200px 800px at 10% 20%, rgba(0, 255, 200, 0.25) 0%, rgba(0,0,0,0) 60%),
+    radial-gradient(1000px 700px at 85% 30%, rgba(0, 100, 255, 0.22) 0%, rgba(0,0,0,0) 60%),
+    linear-gradient(180deg, #0b1020 0%, #0b0b0c 100%);
+  background-blend-mode: screen, screen, normal;
+  background-size: 200% 200%, 200% 200%, 100% 100%;
+  background-position: 0% 50%, 100% 50%, 50% 50%;
+  filter: hue-rotate(0deg) saturate(1.25);
+  animation:
+    hue-spin 24s linear infinite,
+    bg-move 14s ease-in-out infinite alternate;
+}
+
+@keyframes hue-spin {
+  0%   { filter: hue-rotate(0deg)   saturate(1.25); }
+  50%  { filter: hue-rotate(180deg) saturate(1.25); }
+  100% { filter: hue-rotate(360deg) saturate(1.25); }
+}
+
+@keyframes bg-move {
+  0%   { background-position: 0% 50%, 100% 50%, 50% 50%; }
+  100% { background-position: 100% 50%, 0% 50%, 50% 50%; }
+}
+
+.tunnel-container {
+  position: absolute;
+  inset: 0;
+  z-index: 1;           /* di bawah canvas visualizer 2D (z-10) */
+  pointer-events: none; /* biar nggak ganggu klik UI */
+}
